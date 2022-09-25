@@ -18,11 +18,12 @@ namespace Taller2TP3{
 
         }
 
-        public Cliente(int id, string nom, string direc, int tel){
+        public Cliente(int id, string nom, string direc, int tel, string datos){
             this.id = id;
             nombre = nom;
             direccion = direc;
             telefono = tel;
+            DatosReferenciaDireccion = datos;
         }
     }
 
@@ -41,14 +42,20 @@ namespace Taller2TP3{
             ListadoPedidos.Add(pedido);
         }
 
-        public bool TienePedidoEnCurso(){
-            if(ListadoPedidos.Count == 0) return false;
-            else return ListadoPedidos[ListadoPedidos.Count - 1].EstaEnCurso();
+        public bool TienePedidoEnCurso()
+        {
+            if(ListadoPedidos.Count > 0) return ListadoPedidos[ListadoPedidos.Count - 1].EstaEnCurso();
+            return false;
         }
 
-        public Pedido? PedidoEnCurso(){
-            if(ListadoPedidos.Count == 0) return null;
-            else if(TienePedidoEnCurso()) return ListadoPedidos[ListadoPedidos.Count - 1];
+        public List<Pedido> PedidosTotales()
+        {
+            return ListadoPedidos;
+        }
+
+        public Pedido? PedidoEnCurso()
+        {
+            if(ListadoPedidos.Count > 0 && TienePedidoEnCurso()) return ListadoPedidos[ListadoPedidos.Count - 1];
             return null;
         }
 
@@ -58,6 +65,7 @@ namespace Taller2TP3{
                 ListadoPedidos[ListadoPedidos.Count - 1].EntregarPedido();
                 return true;
             }
+
             return false;
         }
 
@@ -75,7 +83,7 @@ namespace Taller2TP3{
             float sumatoria = 0;
 
             foreach(var pedido in ListadoPedidos){
-                if(pedido.EstaEnCurso()) sumatoria += sumatoria += 300;
+                if(!pedido.EstaEnCurso()) sumatoria += 300;
             }
 
             return sumatoria;

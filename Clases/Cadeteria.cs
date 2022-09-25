@@ -17,6 +17,20 @@ namespace Taller2TP3{
         public void MostrarCadetes(){
             foreach(var cadete in ListadoCadetes){
                 Console.WriteLine(cadete);
+                Console.WriteLine("Pedidos:");
+                if(cadete.PedidosTotales().Count > 0)
+                {
+                    foreach (var pedido in cadete.PedidosTotales())
+                    {
+                        Console.WriteLine(pedido);
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No se entregó ningun pedido");
+                }
+                
             }
         }
 
@@ -25,8 +39,9 @@ namespace Taller2TP3{
         }
 
         public bool EntregarPedido(int num){
-            foreach(var cadete in ListadoCadetes){
-                if(cadete.TienePedidoEnCurso() && cadete.PedidoEnCurso().Nro == num && cadete.EntregarPedido()) return true;
+            foreach(var cadete in ListadoCadetes)
+            {
+                if(cadete.TienePedidoEnCurso() && cadete.PedidoEnCurso().Nro == num) return cadete.EntregarPedido();
             }
 
             return false;
@@ -41,12 +56,8 @@ namespace Taller2TP3{
             ListadoCadetes.Add(new Cadete(id, nom, direc, tel));
         }
 
-        public void GenerarPedido(int nro, string det, int id, string nom, string direc, int tel){
-            PedidosPendientes.Add(new Pedido(nro, det, id, nom, direc, tel));
-
-            if(ListadoCadetes.Count > 0 && AsignarPedido(PedidosPendientes[PedidosPendientes.Count - 1])){
-                PedidosPendientes.RemoveAt(PedidosPendientes.Count - 1);
-            }
+        public void GenerarPedido(int nro, string det, int id, string nom, string direc, int tel, string datos){
+            PedidosPendientes.Add(new Pedido(nro, det, id, nom, direc, tel, datos));
         }
 
         public bool ReAsignarPedido(int num){
@@ -59,6 +70,7 @@ namespace Taller2TP3{
                         cadete.EliminarPedido();
                         return true;
                     }
+                    break;
                 }
             }
 

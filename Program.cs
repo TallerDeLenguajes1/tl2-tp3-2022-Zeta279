@@ -19,14 +19,13 @@ namespace Taller2TP3{
                 }
             }
 
-            cadeteria.MostrarCadetes();
-
-
-            while(opcion != 0){
+            while (opcion != 0){
                 Console.WriteLine("1) Alta de pedidos");
                 Console.WriteLine("2) Asignar pedido a cadete");
                 Console.WriteLine("3) Cambiar estado de pedido");
                 Console.WriteLine("4) Cambiar cadete del pedido");
+                Console.WriteLine("5) Mostrar información de cadetería");
+                Console.WriteLine("6) Mostrar pedidos pendientes");
                 Console.WriteLine("0) Salir");
 
                 Console.Write("Opción: ");
@@ -45,8 +44,10 @@ namespace Taller2TP3{
                     direc = Console.ReadLine();
                     Console.WriteLine("Teléfono del cliente: ");
                     tel = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("Datos de la dirección del cliente: ");
+                    datos = Console.ReadLine();
 
-                    cadeteria.GenerarPedido(num, detalles, id, nombre, direc, tel);
+                    cadeteria.GenerarPedido(num, detalles, id, nombre, direc, tel, datos);
                     Console.WriteLine($"Pedido generado con número {num}");
                 }
                 else if(opcion == 2){
@@ -68,6 +69,18 @@ namespace Taller2TP3{
 
                     if(cadeteria.ReAsignarPedido(num)) Console.WriteLine("Pedido reasignado con éxito");
                     else Console.WriteLine("No se pudo reasignar el pedido");
+                }
+                else if(opcion == 5)
+                {
+                    cadeteria.MostrarCadetes();
+                }
+                else if (opcion == 6)
+                {
+                    foreach(var pedido in cadeteria.ObtenerPedidos())
+                    {
+                        Console.WriteLine(pedido);
+                        Console.WriteLine();
+                    }
                 }
 
                 Console.WriteLine();

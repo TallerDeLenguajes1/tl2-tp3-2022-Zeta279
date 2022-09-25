@@ -9,10 +9,10 @@ namespace Taller2TP3{
 
         }
 
-        public Pedido(int nro, string det, int id, string nom, string direc, int tel){
+        public Pedido(int nro, string det, int id, string nom, string direc, int tel, string datos){
             Nro = nro;
             Detalles = det;
-            cliente = new Cliente(id, nom, direc, tel);
+            cliente = new Cliente(id, nom, direc, tel, datos);
         }
 
         public void IniciarPedido(){
@@ -25,6 +25,14 @@ namespace Taller2TP3{
 
         public bool EstaEnCurso(){
             return EnCurso;
+        }
+
+        public override string ToString()
+        {
+            string curso;
+            if (EnCurso) curso = "Si";
+            else curso = "No";
+            return $"Número: {Nro}\nDetalles: {Detalles}\nEn curso: {curso}\nCliente: \n{cliente}";
         }
     }
 }
