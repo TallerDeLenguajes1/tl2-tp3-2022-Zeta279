@@ -12,10 +12,21 @@ namespace Taller2TP3{
 
             List<Cadete> cadetes = new List<Cadete>();
 
-            foreach(var str in File.ReadAllLines("Cadetes.csv")){
-                if(str != ""){
+            foreach(var str in File.ReadAllLines("Cadetes.csv"))
+            {
+                if(str != "")
+                {
                     var aux = str.Split(";");
                     cadeteria.IngresarCadete(new Cadete(Int32.Parse(aux[0]), aux[1], aux[2], Int32.Parse(aux[3])));
+                }
+            }
+
+            foreach(var str in File.ReadAllLines("Pedidos.csv"))
+            {
+                if(str != "")
+                {
+                    var aux = str.Split(";");
+                    cadeteria.GenerarPedido(Int32.Parse(aux[0]), aux[1], Int32.Parse(aux[2]), aux[3], aux[4], Int32.Parse(aux[5]), aux[6]);
                 }
             }
 
@@ -26,10 +37,13 @@ namespace Taller2TP3{
                 Console.WriteLine("4) Cambiar cadete del pedido");
                 Console.WriteLine("5) Mostrar información de cadetería");
                 Console.WriteLine("6) Mostrar pedidos pendientes");
+                Console.WriteLine("7) Facturacion del día");
                 Console.WriteLine("0) Salir");
 
                 Console.Write("Opción: ");
                 opcion = Int32.Parse(Console.ReadLine());
+
+                Console.WriteLine();
 
                 if(opcion == 1){
                     Console.WriteLine("Número de pedido: ");
@@ -81,6 +95,9 @@ namespace Taller2TP3{
                         Console.WriteLine(pedido);
                         Console.WriteLine();
                     }
+                }
+                else if(opcion == 7){
+                    cadeteria.MostrarResumen();
                 }
 
                 Console.WriteLine();

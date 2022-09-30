@@ -39,6 +39,7 @@ namespace Taller2TP3{
         }
 
         public void IngresarPedido(Pedido pedido){
+            pedido.IniciarPedido();
             ListadoPedidos.Add(pedido);
         }
 
@@ -57,6 +58,16 @@ namespace Taller2TP3{
         {
             if(ListadoPedidos.Count > 0 && TienePedidoEnCurso()) return ListadoPedidos[ListadoPedidos.Count - 1];
             return null;
+        }
+
+        public List<Pedido> ObtenerPedidosEntregados(){
+            List<Pedido> listado = new();
+
+            foreach(var pedido in ListadoPedidos){
+                if(!pedido.EstaEnCurso()) listado.Add(pedido);
+            }
+
+            return listado;
         }
 
         public bool EntregarPedido(){

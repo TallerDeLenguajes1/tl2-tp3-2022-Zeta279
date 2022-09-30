@@ -28,9 +28,24 @@ namespace Taller2TP3{
                 }
                 else
                 {
-                    Console.WriteLine("No se entregó ningun pedido");
+                    Console.WriteLine("No se entregï¿½ ningun pedido");
                 }
                 
+            }
+        }
+
+        
+        public void MostrarResumen(){
+            int index = 1;
+
+            foreach(var cadete in ListadoCadetes){
+                Console.WriteLine($"Pedidos del cadete {index++}:");
+                if(cadete.ObtenerPedidosEntregados().Count == 0) Console.WriteLine("No entregÃ³ ningun pedido");
+                else foreach(var pedido in cadete.ObtenerPedidosEntregados()){
+                    Console.WriteLine(pedido);
+                    Console.WriteLine();
+                }
+                Console.WriteLine("Dinero ganado: " + cadete.JornalACobrar());
             }
         }
 
@@ -41,7 +56,9 @@ namespace Taller2TP3{
         public bool EntregarPedido(int num){
             foreach(var cadete in ListadoCadetes)
             {
-                if(cadete.TienePedidoEnCurso() && cadete.PedidoEnCurso().Nro == num) return cadete.EntregarPedido();
+                if(cadete.TienePedidoEnCurso() && cadete.PedidoEnCurso().Nro == num){
+                    return cadete.EntregarPedido();
+                }
             }
 
             return false;
@@ -78,31 +95,25 @@ namespace Taller2TP3{
         }
 
         public bool AsignarPedidoPorNum(int nro){
-            bool asignado = false;
-
             foreach(var pedido in PedidosPendientes){
                 if(pedido.Nro == nro){
-                    asignado = AsignarPedido(pedido);
-                    if(asignado) break;
+                    return AsignarPedido(pedido);
                 }
             }
 
-            return asignado;
+            return false;
         }
 
         public bool AsignarPedido(Pedido pedido){
-            Random rnd = new();
-            bool asignado = false;
-
             foreach(var cadete in ListadoCadetes){
                 if(!cadete.TienePedidoEnCurso()){
                     cadete.IngresarPedido(pedido);
-                    asignado = true;
-                    break;
+                    PedidosPendientes.Remove(pedido);
+                    return true;
                 }
             }
 
-            return asignado;
+            return false;
         }
     }
 }
